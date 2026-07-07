@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Download, Flame, Heart, MessageCircleHeart, Sparkles, Star, Zap } from "lucide-react";
+import { Download, Flame, Heart, MapPin, MessageCircleHeart, Sparkles, Star, Verified, Zap } from "lucide-react";
 import logo from "@/assets/timo-logo.png";
+import match1 from "@/assets/match-1.jpg";
+import match2 from "@/assets/match-2.jpg";
+import match3 from "@/assets/match-3.jpg";
 import { APP_LINKS } from "@/config/app-links";
 
 export const Route = createFileRoute("/")({
@@ -190,6 +193,80 @@ function Landing() {
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{f.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* MATCHES — substitua as imagens em src/assets/match-1.jpg, match-2.jpg, match-3.jpg */}
+      <section className="relative z-10 px-6 md:px-12 py-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Quem você vai <span className="text-gradient-mint">encontrar</span>.
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">
+              Gente real, pertinho de você, com a mesma vibe. Dá só uma espiada.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              {
+                img: match1,
+                name: "Larissa, 25",
+                location: "São Paulo",
+                tag: "Papo sério",
+                online: true,
+              },
+              {
+                img: match2,
+                name: "Camila, 27",
+                location: "Rio de Janeiro",
+                tag: "Aventura",
+                online: true,
+              },
+              {
+                img: match3,
+                name: "Julia, 24",
+                location: "Curitiba",
+                tag: "Sem enrolação",
+                online: false,
+              },
+            ].map((p) => (
+              <div
+                key={p.name}
+                className="group relative rounded-3xl overflow-hidden glass hover:scale-[1.02] transition-transform duration-300"
+              >
+                <div className="aspect-[3/4] overflow-hidden">
+                  <img
+                    src={p.img}
+                    alt={p.name}
+                    loading="lazy"
+                    width={1024}
+                    height={1024}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-deep/90 via-deep/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="text-xl font-bold">{p.name}</h3>
+                    <Verified className="w-4 h-4 text-mint fill-mint" />
+                    {p.online && (
+                      <span className="w-2.5 h-2.5 rounded-full bg-mint animate-pulse" title="online" />
+                    )}
+                  </div>
+                  <div className="flex items-center gap-4 text-sm text-white/80">
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5" /> {p.location}
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full bg-white/15 text-xs font-medium">
+                      {p.tag}
+                    </span>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

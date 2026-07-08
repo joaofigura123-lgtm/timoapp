@@ -117,6 +117,8 @@ function DownloadPage() {
             n={1}
             icon={Download}
             iconColor="text-coral"
+            image={step1}
+            imageAlt="Pop-up de download do Timo no Chrome"
             title="Toque em “Baixar o APK”"
             desc={
               <>
@@ -131,6 +133,8 @@ function DownloadPage() {
             n={2}
             icon={FolderDown}
             iconColor="text-sunny"
+            image={step2}
+            imageAlt="Menu Transferências do Chrome com o arquivo timo.apk"
             title="Se o pop-up sumir, abra “Transferências”"
             desc={
               <>
@@ -145,6 +149,8 @@ function DownloadPage() {
             n={3}
             icon={Settings}
             iconColor="text-mint"
+            image={step3}
+            imageAlt="Tela de permissão do Android: Permitir desta fonte"
             title="Autorize a instalação"
             desc={
               <>
@@ -159,6 +165,8 @@ function DownloadPage() {
             n={4}
             icon={Sparkles}
             iconColor="text-coral"
+            image={step4}
+            imageAlt="Tela de instalação concluída do Timo"
             title="Instalar e abrir"
             desc={
               <>

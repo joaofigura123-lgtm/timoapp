@@ -1,10 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Download, Flame, Heart, MapPin, MessageCircleHeart, Sparkles, Star, Verified, Zap } from "lucide-react";
 import logo from "@/assets/timo-logo.png";
 import match1 from "@/assets/match-1.jpg";
 import match2 from "@/assets/match-2.jpg";
 import match3 from "@/assets/match-3.jpg";
-import { APP_LINKS } from "@/config/app-links";
 
 export const Route = createFileRoute("/")({
   head: () => ({

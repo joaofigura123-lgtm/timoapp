@@ -1,10 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Download, Flame, Heart, MapPin, MessageCircleHeart, Sparkles, Star, Verified, Zap } from "lucide-react";
 import logo from "@/assets/timo-logo.png";
 import match1 from "@/assets/match-1.jpg";
 import match2 from "@/assets/match-2.jpg";
 import match3 from "@/assets/match-3.jpg";
-import { APP_LINKS } from "@/config/app-links";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -41,14 +40,12 @@ function DownloadBtn({
       ? "bg-gradient-to-r from-mint-glow via-mint to-coral text-deep glow-mint hover:scale-[1.03]"
       : "glass text-foreground hover:bg-white/10";
   return (
-    <a
-      href={APP_LINKS.download}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Link
+      to="/download"
       className={`inline-flex items-center gap-2 rounded-full font-semibold transition-all duration-300 ${sizes} ${styles}`}
     >
       {children}
-    </a>
+    </Link>
   );
 }
 

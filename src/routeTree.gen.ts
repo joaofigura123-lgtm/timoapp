@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as DownloadRouteImport } from './routes/download'
+import { Route as AdminTimoStatsRouteImport } from './routes/admin-timo-stats'
 import { Route as IndexRouteImport } from './routes/index'
 
 const DownloadRoute = DownloadRouteImport.update({
   id: '/download',
   path: '/download',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTimoStatsRoute = AdminTimoStatsRouteImport.update({
+  id: '/admin-timo-stats',
+  path: '/admin-timo-stats',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin-timo-stats': typeof AdminTimoStatsRoute
   '/download': typeof DownloadRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin-timo-stats': typeof AdminTimoStatsRoute
   '/download': typeof DownloadRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin-timo-stats': typeof AdminTimoStatsRoute
   '/download': typeof DownloadRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/download'
+  fullPaths: '/' | '/admin-timo-stats' | '/download'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/download'
-  id: '__root__' | '/' | '/download'
+  to: '/' | '/admin-timo-stats' | '/download'
+  id: '__root__' | '/' | '/admin-timo-stats' | '/download'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminTimoStatsRoute: typeof AdminTimoStatsRoute
   DownloadRoute: typeof DownloadRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/download'
       fullPath: '/download'
       preLoaderRoute: typeof DownloadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin-timo-stats': {
+      id: '/admin-timo-stats'
+      path: '/admin-timo-stats'
+      fullPath: '/admin-timo-stats'
+      preLoaderRoute: typeof AdminTimoStatsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,18 +87,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminTimoStatsRoute: AdminTimoStatsRoute,
   DownloadRoute: DownloadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

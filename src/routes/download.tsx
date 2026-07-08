@@ -17,6 +17,7 @@ import step2 from "@/assets/step-2-transfers.png";
 import step3 from "@/assets/step-3-allow.png";
 import step4 from "@/assets/step-4-install.png";
 import { APP_LINKS } from "@/config/app-links";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/download")({
   head: () => ({
@@ -45,6 +46,10 @@ function DownloadPage() {
     setClicked(true);
     // rola pro topo pra reforçar a dica do pop-up
     if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+    // registra o clique (não bloqueia o download em caso de erro)
+    void supabase.rpc("increment_download_clicks").then(({ error }) => {
+      if (error) console.error("Falha ao contar clique:", error.message);
+    });
   };
 
   return (

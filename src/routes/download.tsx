@@ -12,6 +12,10 @@ import {
   Sparkles,
 } from "lucide-react";
 import logo from "@/assets/timo-logo.png";
+import step1 from "@/assets/step-1-download.png";
+import step2 from "@/assets/step-2-transfers.png";
+import step3 from "@/assets/step-3-allow.png";
+import step4 from "@/assets/step-4-install.png";
 import { APP_LINKS } from "@/config/app-links";
 
 export const Route = createFileRoute("/download")({
@@ -113,6 +117,8 @@ function DownloadPage() {
             n={1}
             icon={Download}
             iconColor="text-coral"
+            image={step1}
+            imageAlt="Pop-up de download do Timo no Chrome"
             title="Toque em “Baixar o APK”"
             desc={
               <>
@@ -127,6 +133,8 @@ function DownloadPage() {
             n={2}
             icon={FolderDown}
             iconColor="text-sunny"
+            image={step2}
+            imageAlt="Menu Transferências do Chrome com o arquivo timo.apk"
             title="Se o pop-up sumir, abra “Transferências”"
             desc={
               <>
@@ -141,6 +149,8 @@ function DownloadPage() {
             n={3}
             icon={Settings}
             iconColor="text-mint"
+            image={step3}
+            imageAlt="Tela de permissão do Android: Permitir desta fonte"
             title="Autorize a instalação"
             desc={
               <>
@@ -155,6 +165,8 @@ function DownloadPage() {
             n={4}
             icon={Sparkles}
             iconColor="text-coral"
+            image={step4}
+            imageAlt="Tela de instalação concluída do Timo"
             title="Instalar e abrir"
             desc={
               <>
@@ -208,30 +220,48 @@ function StepCard({
   n,
   icon: Icon,
   iconColor,
+  image,
+  imageAlt,
   title,
   desc,
 }: {
   n: number;
   icon: React.ComponentType<{ className?: string }>;
   iconColor: string;
+  image: string;
+  imageAlt: string;
   title: string;
   desc: React.ReactNode;
 }) {
   return (
-    <div className="glass rounded-3xl p-6 flex gap-5">
-      <div className="flex flex-col items-center gap-3">
-        <div className="w-11 h-11 rounded-full bg-gradient-to-br from-mint-glow to-coral text-deep font-bold flex items-center justify-center text-lg shrink-0">
-          {n}
+    <div className="glass rounded-3xl p-5 md:p-6">
+      <div className="flex gap-5">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-11 h-11 rounded-full bg-gradient-to-br from-mint-glow to-coral text-deep font-bold flex items-center justify-center text-lg shrink-0">
+            {n}
+          </div>
+          <div className={`w-10 h-10 rounded-2xl bg-white/5 flex items-center justify-center ${iconColor}`}>
+            <Icon className="w-5 h-5" />
+          </div>
         </div>
-        <div className={`w-10 h-10 rounded-2xl bg-white/5 flex items-center justify-center ${iconColor}`}>
-          <Icon className="w-5 h-5" />
+        <div className="flex-1">
+          <h3 className="text-lg md:text-xl font-semibold mb-2">{title}</h3>
+          <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+            {desc}
+          </p>
         </div>
       </div>
-      <div className="flex-1">
-        <h3 className="text-lg md:text-xl font-semibold mb-2">{title}</h3>
-        <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-          {desc}
-        </p>
+
+      <div className="mt-5 relative overflow-hidden rounded-2xl border border-white/10 bg-deep/40">
+        <img
+          src={image}
+          alt={imageAlt}
+          loading="lazy"
+          width={1024}
+          height={1024}
+          className="w-full h-auto object-cover"
+        />
+        <div className="absolute inset-0 pointer-events-none rounded-2xl ring-1 ring-inset ring-white/10" />
       </div>
     </div>
   );

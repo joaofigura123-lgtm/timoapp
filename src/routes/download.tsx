@@ -12,6 +12,10 @@ import {
   Sparkles,
 } from "lucide-react";
 import logo from "@/assets/timo-logo.png";
+import step1 from "@/assets/step-1-download.png";
+import step2 from "@/assets/step-2-transfers.png";
+import step3 from "@/assets/step-3-allow.png";
+import step4 from "@/assets/step-4-install.png";
 import { APP_LINKS } from "@/config/app-links";
 
 export const Route = createFileRoute("/download")({

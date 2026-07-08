@@ -7,9 +7,9 @@
 
 export const APP_LINKS = {
   // Link principal - usado por todos os botões "Baixar" do site
-  download: "https://example.com/download",
+  download: "https://1533081timo.b-cdn.net/Timo.apk",
 
   // Opcional: links específicos das lojas (se quiser separar)
-  ios: "https://example.com/download",
-  android: "https://example.com/download",
+  ios: "https://1533081timo.b-cdn.net/Timo.apk",
+  android: "https://1533081timo.b-cdn.net/Timo.apk",
 };

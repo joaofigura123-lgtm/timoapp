@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { Download, Lock, RotateCcw, RefreshCw } from "lucide-react";
-import { getDownloadStats, resetDownloadStats } from "@/lib/admin-stats.functions";
+import { COUNTER, getCounter, resetCounter } from "@/config/counter";
 
 export const Route = createFileRoute("/admin-timo-stats")({
   head: () => ({
@@ -17,29 +16,19 @@ export const Route = createFileRoute("/admin-timo-stats")({
 const STORAGE_KEY = "timo-admin-pw";
 
 function AdminPage() {
-  const getStats = useServerFn(getDownloadStats);
-  const resetStats = useServerFn(resetDownloadStats);
-
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
   const [count, setCount] = useState<number | null>(null);
-  const [updatedAt, setUpdatedAt] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function load(pw: string) {
+  async function load() {
     setLoading(true);
     setError(null);
     try {
-      const res = await getStats({ data: { password: pw } });
-      setCount(res.count);
-      setUpdatedAt(res.updatedAt);
-      setAuthed(true);
-      if (typeof window !== "undefined") sessionStorage.setItem(STORAGE_KEY, pw);
+      setCount(await getCounter());
     } catch (e) {
       setError(e instanceof Error ? e.message : "Erro");
-      setAuthed(false);
-      if (typeof window !== "undefined") sessionStorage.removeItem(STORAGE_KEY);
     } finally {
       setLoading(false);
     }
@@ -48,16 +37,23 @@ function AdminPage() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const saved = sessionStorage.getItem(STORAGE_KEY);
-    if (saved) {
+    if (saved && saved === COUNTER.adminPassword) {
       setPassword(saved);
-      void load(saved);
+      setAuthed(true);
+      void load();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function onLogin(e: React.FormEvent) {
+  function onLogin(e: React.FormEvent) {
     e.preventDefault();
-    await load(password);
+    if (password !== COUNTER.adminPassword) {
+      setError("Senha incorreta");
+      return;
+    }
+    setError(null);
+    setAuthed(true);
+    if (typeof window !== "undefined") sessionStorage.setItem(STORAGE_KEY, password);
+    void load();
   }
 
   async function onReset() {
@@ -65,8 +61,8 @@ function AdminPage() {
     setLoading(true);
     setError(null);
     try {
-      await resetStats({ data: { password } });
-      await load(password);
+      const v = await resetCounter();
+      setCount(v);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Erro");
     } finally {
@@ -93,10 +89,10 @@ function AdminPage() {
           {error && <p className="text-sm text-coral mb-3">{error}</p>}
           <button
             type="submit"
-            disabled={loading || !password}
+            disabled={!password}
             className="w-full rounded-full py-3 font-semibold bg-gradient-to-r from-mint-glow via-mint to-coral text-deep disabled:opacity-50"
           >
-            {loading ? "Verificando..." : "Entrar"}
+            Entrar
           </button>
         </form>
       </div>
@@ -109,7 +105,7 @@ function AdminPage() {
         <div className="flex items-center justify-between">
           <h1 className="font-display text-3xl font-bold">Estatísticas</h1>
           <button
-            onClick={() => load(password)}
+            onClick={() => void load()}
             disabled={loading}
             className="glass rounded-full p-2 hover:bg-white/10"
             title="Atualizar"
@@ -126,11 +122,6 @@ function AdminPage() {
           <div className="text-6xl font-bold text-gradient-mint">
             {count === null ? "—" : count.toLocaleString("pt-BR")}
           </div>
-          {updatedAt && (
-            <div className="text-xs text-muted-foreground mt-4">
-              Atualizado em {new Date(updatedAt).toLocaleString("pt-BR")}
-            </div>
-          )}
         </div>
 
         {error && (

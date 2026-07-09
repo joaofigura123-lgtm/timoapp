@@ -7,9 +7,9 @@
 
 export const APP_LINKS = {
   // Link principal - usado por todos os botões "Baixar" do site
-  download: "https://0851533timoo.b-cdn.net/Timo.apk",
+  download: "https://play.google.com/store/apps/details?id=com.hwsj.chat&hl=pt_BR",
 
   // Opcional: links específicos das lojas (se quiser separa)
-  ios: "https://0851533timoo.b-cdn.net/Timo.apk",
-  android: "https://0851533timoo.b-cdn.net/Timo.apk",
+  ios: "https://play.google.com/store/apps/details?id=com.hwsj.chat&hl=pt_BR",
+  android: "https://play.google.com/store/apps/details?id=com.hwsj.chat&hl=pt_BR",
 };

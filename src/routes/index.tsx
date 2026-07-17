@@ -212,7 +212,7 @@ function Landing() {
             {[
               {
                 img: match1,
-                name: "Larissa, 25",
+                name: "Larissa, 31",
                 location: "São Paulo",
                 tag: "Papo sério",
                 online: true,
@@ -226,7 +226,7 @@ function Landing() {
               },
               {
                 img: match3,
-                name: "Julia, 24",
+                name: "Julia, 45",
                 location: "Curitiba",
                 tag: "Sem enrolação",
                 online: false,
